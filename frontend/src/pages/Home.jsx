@@ -7,7 +7,7 @@ import Product from "./Products/Product";
 
 const Home = () => {
   const { keyword } = useParams();
-  const { data, isLoading, isError } = useGetProductsQuery({ keyword });
+  const { data: products = [], isLoading, isError } = useGetProductsQuery({ keyword });
 
   return (
     <>
@@ -35,7 +35,7 @@ const Home = () => {
 
           <div>
             <div className="flex justify-center flex-wrap mt-[2rem]">
-              {data.products.map((product) => (
+              {products.map((product) => (
                 <div key={product._id}>
                   <Product product={product} />
                 </div>

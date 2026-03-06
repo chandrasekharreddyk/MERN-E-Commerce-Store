@@ -8,6 +8,7 @@ export const productApiSlice = apiSlice.injectEndpoints({
         url: `${PRODUCT_URL}`,
         params: { keyword },
       }),
+      transformResponse: (response) => response.products, // add this line
       keepUnusedDataFor: 5,
       providesTags: ["Products"],
     }),
