@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:4.4.30
+    container_name: mern-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"          # optional: exposes Mongo for tools like Compass
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile   # your existing backend Dockerfile in repo root
+    container_name: mern-backend
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    env_file:
+      - .env                   # uses MONGO_URI=mongodb://mongo:27017/huxnStore
+    ports:
+      - "5000:5000"
+    # If your backend expects NODE_ENV from env file, no extra needed
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: mern-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:

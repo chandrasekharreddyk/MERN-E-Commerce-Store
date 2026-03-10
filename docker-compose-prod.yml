@@ -1,0 +1,23 @@
+services:
+  mongo:
+    # In prod you usually do NOT expose Mongo to the internet.
+    # Comment this out if the DB should only be reachable inside Docker.
+    ports:
+      - "27017:27017"
+    #environment:
+    # can use below auth vars for later for authentication purposes
+      #MONGO_INITDB_ROOT_USERNAME: root
+      #MONGO_INITDB_ROOT_PASSWORD: example  # change in real prod
+
+  backend:
+    environment:
+      NODE_ENV: production
+      # In real prod, point to a secured Mongo URI, possibly with auth:
+      # MONGO_URI: mongodb://root:example@mongo:27017/huxnStore?authSource=admin
+    # No dev-specific command override: use CMD from Dockerfile (node, not nodemon)
+    # No volumes: code runs from immutable image
+
+  frontend:
+    environment:
+      NODE_ENV: production
+    # No extra overrides here; just rely on built assets + Nginx

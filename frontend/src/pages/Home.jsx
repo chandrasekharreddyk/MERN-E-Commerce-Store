@@ -7,16 +7,21 @@ import Product from "./Products/Product";
 
 const Home = () => {
   const { keyword } = useParams();
-  const { data: products = [], isLoading, isError } = useGetProductsQuery({ keyword });
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    error,
+  } = useGetProductsQuery({ keyword });
 
   return (
     <>
       {!keyword ? <Header /> : null}
       {isLoading ? (
         <Loader />
-      ) : isError ? (
+      ) : isError && !products?.length ? (
         <Message variant="danger">
-          {isError?.data.message || isError.error}
+          {error?.data?.message || error?.error || "Failed to load products"}
         </Message>
       ) : (
         <>

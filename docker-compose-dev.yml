@@ -1,0 +1,25 @@
+services:
+  mongo:
+    # keep same image; in dev it's useful to expose the port
+    ports:
+      - "27017:27017"
+
+  backend:
+    # mount source so nodemon sees changes
+    volumes:
+      - ./backend:/app/backend
+      - ./package.json:/app/package.json
+      - ./package-lock.json:/app/package-lock.json
+    environment:
+      NODE_ENV: development
+    command: ["npm", "run", "backend"]   # nodemon script you already use
+    # optional extra port for debugger, etc.
+    # ports:
+    #   - "9229:9229"
+
+  frontend:
+    # for now we keep using the built Nginx image in dev;
+    # if you want Vite dev server later we can change this
+    environment:
+      NODE_ENV: development
+    # no extra ports; 3000 already mapped in base file
