@@ -10,6 +10,7 @@ services:
       #MONGO_INITDB_ROOT_PASSWORD: example  # change in real prod
 
   backend:
+    image: chandrasekhark97/mern-backend:latest
     environment:
       NODE_ENV: production
       # In real prod, point to a secured Mongo URI, possibly with auth:
@@ -18,6 +19,7 @@ services:
     # No volumes: code runs from immutable image
 
   frontend:
+    image: chandrasekhark97/mern-frontend:latest
     environment:
       NODE_ENV: production
     # No extra overrides here; just rely on built assets + Nginx
