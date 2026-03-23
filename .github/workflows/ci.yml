@@ -29,8 +29,8 @@ jobs:
 
       - name: Backend lint and tests
         run: |
-          npm run lint || echo "no backend lint script"
-          npm test || echo "no backend tests"
+          npm run lint
+          npm test
 
       # Frontend: install + minimal test/build
       - name: Install frontend dependencies
@@ -40,8 +40,8 @@ jobs:
       - name: Frontend lint and tests
         working-directory: ./frontend
         run: |
-          npm run lint || echo "no frontend lint script"
-          npm test || echo "no frontend tests"
+          npm run lint
+          npm test
           npm run build
 
   build-app-and-docker:
