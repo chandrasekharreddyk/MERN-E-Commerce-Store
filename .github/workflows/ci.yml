@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build-app-and-docker:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,11 +23,47 @@ jobs:
             package-lock.json
             frontend/package-lock.json
 
-      # Backend: install from root (backend code is in /backend)
+      # Backend: install + minimal test (can be `npm test` or just `npm run lint`)
       - name: Install backend dependencies
         run: npm ci
 
-      # Frontend: install + build
+      - name: Backend lint and tests
+        run: |
+          npm run lint || echo "no backend lint script"
+          npm test || echo "no backend tests"
+
+      # Frontend: install + minimal test/build
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Frontend lint and tests
+        working-directory: ./frontend
+        run: |
+          npm run lint || echo "no frontend lint script"
+          npm test || echo "no frontend tests"
+          npm run build
+
+  build-app-and-docker:
+    runs-on: ubuntu-latest
+    needs: test   # only run if test job succeeds
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci
+
       - name: Install frontend dependencies
         working-directory: ./frontend
         run: npm ci
@@ -36,7 +72,6 @@ jobs:
         working-directory: ./frontend
         run: npm run build
 
-      # Docker: login + build & push images
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:

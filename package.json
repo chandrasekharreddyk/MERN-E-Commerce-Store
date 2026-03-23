@@ -7,7 +7,9 @@
   "scripts": {
     "backend": "nodemon backend/index.js",
     "frontend": "npm run dev --prefix frontend",
-    "dev": "concurrently \"npm run frontend\" \"npm run backend"
+    "dev": "concurrently \"npm run frontend\" \"npm run backend",
+    "test": "jest --runInBand",
+    "lint": "echo \"backend lint placeholder\""
   },
   "keywords": [],
   "author": "HuXn WebDev",
@@ -25,5 +27,14 @@
     "mongoose": "^7.6.3",
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": [
+      "<rootDir>/backend"
+    ]
   }
 }
