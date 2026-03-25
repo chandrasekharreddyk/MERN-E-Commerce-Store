@@ -23,4 +23,5 @@ spec:
         - containerPort: 5000
         env:
         - name: MONGO_URI
-          value: "mongodb://mongo-service.mern-dev.svc.cluster.local:27017/mernapp"
+          value: "mongodb://root:password@mongo-service:27017/mernapp?authSource=admin"
+          #value: "mongodb://mongo-service.mern-dev.svc.cluster.local:27017/mernapp"
