@@ -1,0 +1,43 @@
+frontend:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: chandrasekhark97/mern-frontend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    type: NodePort
+    port: 80
+    nodePort: 30080
+  env:
+    - name: VITE_API_BASE_URL
+      value: "/api"
+
+backend:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: chandrasekhark97/mern-backend
+    tag: "latest"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 5000
+  env:
+    - name: MONGO_URL
+      value: "mongodb://mongo-service:27017/mern-ecommerce"
+    - name: NODE_ENV
+      value: "production"
+    - name: PORT
+      value: "5000"
+
+mongo:
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: mongo
+    tag: "4.4"
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+    port: 27017
