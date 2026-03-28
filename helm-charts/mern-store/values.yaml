@@ -3,7 +3,7 @@ frontend:
   replicaCount: 1
   image:
     repository: chandrasekhark97/mern-frontend
-    tag: "latest"
+    tag: "v1.0.0"
     pullPolicy: IfNotPresent
   service:
     type: NodePort
@@ -18,7 +18,7 @@ backend:
   replicaCount: 2
   image:
     repository: chandrasekhark97/mern-backend
-    tag: "latest"
+    tag: "v1.0.0"
     pullPolicy: IfNotPresent
   service:
     type: ClusterIP
